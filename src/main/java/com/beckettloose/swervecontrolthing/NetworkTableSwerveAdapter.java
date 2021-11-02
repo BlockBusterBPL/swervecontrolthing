@@ -7,10 +7,16 @@ package com.beckettloose.swervecontrolthing;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import net.java.games.input.*;
+import com.beckettloose.swervecontrolthing.InputHandler;
 
 public class NetworkTableSwerveAdapter 
 {
+    static NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    static NetworkTable table = inst.getTable("JoystickControls");
+    NetworkTableEntry lxEntry = table.getEntry("0x");
+    NetworkTableEntry lyEntry = table.getEntry("0y");
+    NetworkTableEntry rxEntry = table.getEntry("0rx");
+    NetworkTableEntry ryEntry = table.getEntry("0ry");
     public static void main( String[] args )
     {
         System.out.println( "Swerve Joystick Controller Starting" );
@@ -18,16 +24,13 @@ public class NetworkTableSwerveAdapter
     }
 
     public void run() {
-        NetworkTableInstance inst = NetworkTableInstance.getDefault();
-        NetworkTable table = inst.getTable("JoystickControls");
-        NetworkTableEntry lxEntry = table.getEntry("lx");
-        NetworkTableEntry lyEntry = table.getEntry("ly");
-        NetworkTableEntry rxEntry = table.getEntry("rx");
-        NetworkTableEntry ryEntry = table.getEntry("ry");
-        inst.startClientTeam(3707);
+        
+        inst.startClient("localhost");
+        //inst.startClientTeam(3707);
+        InputHandler.main();
     }
 
-    public void updateTableValueDouble(String entry, double value) {
-        
+    public static void updateTableValueDouble(String entry, double value) {
+        table.getEntry(entry).forceSetDouble(value);
     }
 }

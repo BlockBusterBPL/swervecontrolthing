@@ -1,6 +1,11 @@
 package com.beckettloose.swervecontrolthing;
 
-import net.java.games.input.*;
+import net.java.games.input.Component;
+import net.java.games.input.Controller;
+import net.java.games.input.ControllerEnvironment;
+import net.java.games.input.Event;
+import net.java.games.input.EventQueue;
+import com.beckettloose.swervecontrolthing.NetworkTableSwerveAdapter;
 
 public class InputHandler {
     public InputHandler() {
@@ -25,7 +30,11 @@ public class InputHandler {
 
 				/* For each object in the queue */
 				while (queue.getNextEvent(event)) {
-
+					Component comp = event.getComponent();
+					System.out.println(controllers[i].getPortNumber());
+					if (comp.getIdentifier().toString().matches("x|y|rx|ry")) {
+						
+					
 					/*
 					 * Create a string buffer and put in it, the controller name,
 					 * the time stamp of the event, the name of the component
@@ -36,28 +45,30 @@ public class InputHandler {
 					 * across controllers this way. We can not use it to tell
 					 * exactly *when* an event happened just the order.
 					 */
-					StringBuffer buffer = new StringBuffer(controllers[i]
-							.getName());
-					buffer.append(" at ");
-					buffer.append(event.getNanos()).append(", ");
-					Component comp = event.getComponent();
-					buffer.append(comp.getName()).append(" changed to ");
-					float value = event.getValue();
+						StringBuffer buffer = new StringBuffer().append(controllers[i].getPortNumber());
+						buffer.append(comp.getIdentifier()).append(" set ");
+						float value = event.getValue();
+
+						StringBuffer id = new StringBuffer()
+						.append(controllers[i].getPortNumber())
+						.append(comp.getIdentifier());
 
 					/*
 					 * Check the type of the component and display an
 					 * appropriate value
 					 */
-					if (comp.isAnalog()) {
-						buffer.append(value);
-					} else {
-						if (value == 1.0f) {
-							buffer.append("On");
+						if (comp.isAnalog()) {
+							buffer.append(value);
 						} else {
-							buffer.append("Off");
+							if (value == 1.0f) {
+								buffer.append("On");
+							} else {
+								buffer.append("Off");
+							}
 						}
+						System.out.println(buffer.toString());
+						NetworkTableSwerveAdapter.updateTableValueDouble(id.toString(), (double)value);
 					}
-					System.out.println(buffer.toString());
 				}
 			}
 
@@ -74,7 +85,7 @@ public class InputHandler {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main() {
 		new InputHandler();
 	}
 }
