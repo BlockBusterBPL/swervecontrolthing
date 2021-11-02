@@ -46,7 +46,7 @@
       <groupId>edu.wpi.first.ntcore</groupId>
       <artifactId>ntcore-jni</artifactId>
       <version>2021.3.1</version>
-      <classifier>linuxraspbian</classifier>
+      <classifier>linuxaarch64bionic</classifier>
       <scope>runtime</scope>
     </dependency>
 
