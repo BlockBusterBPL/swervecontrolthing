@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.beckettloose.swervecontrolthing</groupId>
@@ -85,7 +84,8 @@
         <directory>src/main/resources/</directory>
       </resource>
     </resources>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
+      <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
@@ -162,23 +162,23 @@
           <artifactId>exec-maven-plugin</artifactId>
           <version>1.6.0</version>
           <executions>
-              <execution>
-                  <goals>
-                      <goal>exec</goal>
-                  </goals>
-              </execution>
+            <execution>
+              <goals>
+                <goal>exec</goal>
+              </goals>
+            </execution>
           </executions>
           <configuration>
-              <executable>java</executable>
-              <arguments>
-                  <argument>-classpath</argument>
-                  <classpath/>
-                  <argument>-Djava.library.path=${project.build.directory}/natives</argument>
-                  <argument>-Djinput.loglevel=OFF</argument>
-                  <argument>com.beckettloose.swervecontrolthing.NetworkTableSwerveAdapter</argument>
-              </arguments>
+            <executable>java</executable>
+            <arguments>
+              <argument>-classpath</argument>
+              <classpath />
+              <argument>-Djava.library.path=${project.build.directory}/natives</argument>
+              <argument>-Djinput.loglevel=OFF</argument>
+              <argument>com.beckettloose.swervecontrolthing.NetworkTableSwerveAdapter</argument>
+            </arguments>
           </configuration>
-      </plugin>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>

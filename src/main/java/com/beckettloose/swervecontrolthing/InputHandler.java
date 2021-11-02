@@ -8,14 +8,18 @@ import net.java.games.input.EventQueue;
 import com.beckettloose.swervecontrolthing.NetworkTableSwerveAdapter;
 
 public class InputHandler {
-    public InputHandler() {
+	public InputHandler() {
 		while (true) {
 			/* Get the available controllers */
-			Controller[] controllers = ControllerEnvironment
-					.getDefaultEnvironment().getControllers();
+			Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
 			if (controllers.length == 0) {
 				System.out.println("Found no controllers.");
-				System.exit(0);
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 			for (int i = 0; i < controllers.length; i++) {
@@ -31,32 +35,17 @@ public class InputHandler {
 				/* For each object in the queue */
 				while (queue.getNextEvent(event)) {
 					Component comp = event.getComponent();
-					System.out.println(controllers[i].getPortNumber());
 					if (comp.getIdentifier().toString().matches("x|y|rx|ry")) {
-						
-					
-					/*
-					 * Create a string buffer and put in it, the controller name,
-					 * the time stamp of the event, the name of the component
-					 * that changed and the new value.
-					 * 
-					 * Note that the timestamp is a relative thing, not
-					 * absolute, we can tell what order events happened in
-					 * across controllers this way. We can not use it to tell
-					 * exactly *when* an event happened just the order.
-					 */
 						StringBuffer buffer = new StringBuffer().append(controllers[i].getPortNumber());
 						buffer.append(comp.getIdentifier()).append(" set ");
 						float value = event.getValue();
 
-						StringBuffer id = new StringBuffer()
-						.append(controllers[i].getPortNumber())
-						.append(comp.getIdentifier());
+						StringBuffer id = new StringBuffer().append(controllers[i].getPortNumber())
+								.append(comp.getIdentifier());
 
-					/*
-					 * Check the type of the component and display an
-					 * appropriate value
-					 */
+						/*
+						 * Check the type of the component and display an appropriate value
+						 */
 						if (comp.isAnalog()) {
 							buffer.append(value);
 						} else {
@@ -67,21 +56,15 @@ public class InputHandler {
 							}
 						}
 						System.out.println(buffer.toString());
-						NetworkTableSwerveAdapter.updateTableValueDouble(id.toString(), (double)value);
+						NetworkTableSwerveAdapter.updateTableValueDouble(id.toString(), (double) value);
 					}
 				}
 			}
 
 			/*
-			 * Sleep for 20 milliseconds, in here only so the example doesn't
-			 * thrash the system.
+			 * Sleep for 20 milliseconds, in here only so the example doesn't thrash the
+			 * system.
 			 */
-			try {
-				Thread.sleep(20);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 
