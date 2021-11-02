@@ -24,8 +24,8 @@ public class NetworkTableSwerveAdapter
     }
 
     public void run() {
-        inst.startServer();
-        //inst.startClientTeam(3707);
+        //inst.startServer();
+        inst.startClientTeam(3707);
         InputHandler.main();
     }
 
