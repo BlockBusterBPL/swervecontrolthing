@@ -15,7 +15,7 @@ public class InputHandler {
 			if (controllers.length == 0) {
 				System.out.println("Found no controllers.");
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(5000); // Keep checking for controllers every 5 seconds
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
