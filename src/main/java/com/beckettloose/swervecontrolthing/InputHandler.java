@@ -35,7 +35,7 @@ public class InputHandler {
 				/* For each object in the queue */
 				while (queue.getNextEvent(event)) {
 					Component comp = event.getComponent();
-					if (comp.getIdentifier().toString().matches("x|y|rx|ry")) {
+					if (/*comp.getIdentifier().toString().matches("x|y|rx|ry")*/true) {
 						StringBuffer buffer = new StringBuffer().append(controllers[i].getPortNumber());
 						buffer.append(comp.getIdentifier()).append(" set ");
 						float value = event.getValue();
