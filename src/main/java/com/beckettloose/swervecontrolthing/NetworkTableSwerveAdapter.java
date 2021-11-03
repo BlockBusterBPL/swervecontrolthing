@@ -24,4 +24,8 @@ public class NetworkTableSwerveAdapter {
     public static void updateTableValueDouble(String entry, double value) {
         table.getEntry(entry).forceSetDouble(value);
     }
+
+    public static void updateTableValueBoolean(String entry, Boolean value) {
+        table.getEntry(entry).forceSetBoolean(value);
+    }
 }

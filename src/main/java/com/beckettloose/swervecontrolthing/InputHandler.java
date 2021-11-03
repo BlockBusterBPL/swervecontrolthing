@@ -47,16 +47,18 @@ public class InputHandler {
 						 * Check the type of the component and display an appropriate value
 						 */
 						if (comp.isAnalog()) {
+							NetworkTableSwerveAdapter.updateTableValueDouble(id.toString(), value);
 							buffer.append(value);
 						} else {
 							if (value == 1.0f) {
+								NetworkTableSwerveAdapter.updateTableValueBoolean(id.toString(), true);
 								buffer.append("On");
 							} else {
+								NetworkTableSwerveAdapter.updateTableValueBoolean(id.toString(), false);
 								buffer.append("Off");
 							}
 						}
 						System.out.println(buffer.toString());
-						NetworkTableSwerveAdapter.updateTableValueDouble(id.toString(), (double) value);
 					}
 				}
 			}
