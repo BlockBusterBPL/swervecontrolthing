@@ -16,8 +16,8 @@ public class NetworkTableSwerveAdapter {
     public static void main( String[] args )
     {
         System.out.println( "Swerve Joystick Controller Starting" );
-        inst.startClient("10.0.1.68");
-        //inst.startClientTeam(3707);
+        //inst.startClient("10.0.1.68");
+        inst.startClientTeam(3707);
         InputHandler.main();
     }
 
