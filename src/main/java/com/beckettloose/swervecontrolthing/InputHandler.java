@@ -5,7 +5,6 @@ import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 import net.java.games.input.Event;
 import net.java.games.input.EventQueue;
-import com.beckettloose.swervecontrolthing.NetworkTableSwerveAdapter;
 
 public class InputHandler {
 	public InputHandler() {
@@ -17,7 +16,6 @@ public class InputHandler {
 				try {
 					Thread.sleep(5000); // Keep checking for controllers every 5 seconds
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

@@ -8,7 +8,7 @@ public class JoystickEventNormalizer {
         this.in = event;
     }
 
-    public NormalizedJoystickEvent get() {
+    public NormalizedJoystickEvent getNormalizedEvent() {
         out.setType(in.getType());
         out.setNumber(in.getNumber());
         out.setValue(((in.getValue()+32768)/(32768+32768))*(1+1)-1.0);

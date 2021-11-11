@@ -2,7 +2,6 @@ package com.beckettloose.swervecontrolthing;
 
 import edu.wpi.first.networktables.*;
 import java.io.*;
-import com.beckettloose.swervecontrolthing.RawJoystickEvent;
 
 public class RawInputHandler implements Runnable {
 
@@ -13,8 +12,8 @@ public class RawInputHandler implements Runnable {
     int stickID;
     DataInputStream in;
 
-    NormalizedJoystickEvent[] buttonStates;
-    NormalizedJoystickEvent[] axisStates;
+    NormalizedJoystickEvent[] buttonStates = new NormalizedJoystickEvent[0xFF];
+    NormalizedJoystickEvent[] axisStates = new NormalizedJoystickEvent[0xFF];
 
     RawInputHandler(String path, int stickID) {
         this.path = path;
@@ -23,7 +22,7 @@ public class RawInputHandler implements Runnable {
             DataInputStream in = new DataInputStream(new FileInputStream(path));
             this.in = in;
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
+            System.out.println("Device File Not Found!");
             e.printStackTrace();
         }
     }
@@ -31,18 +30,24 @@ public class RawInputHandler implements Runnable {
     public void run() {
         while (!Thread.interrupted()) {
             try {
-                NormalizedJoystickEvent event = new JoystickEventNormalizer(poll()).get();
+                NormalizedJoystickEvent event = new JoystickEventNormalizer(getNextEvent()).getNormalizedEvent();
+                Boolean isEventAxis = new JoystickEventInfo(event).isAxis();
+                int eventId = event.getNumber();
+                if (isEventAxis) {
+                    axisStates[eventId] = event;
+                } else {
+                    buttonStates[eventId] = event;
+                }
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
     }
 
-    public RawJoystickEvent poll() throws IOException {
+    public RawJoystickEvent getNextEvent() throws IOException {
         in.readInt();
         int value = in.readShort();
-        int type = in.readUnsignedByte();
+        int type = (in.readUnsignedByte() << 1 ) >> 1 ;
         int number = in.readUnsignedByte();
         return new RawJoystickEvent(value, type, number);
     }

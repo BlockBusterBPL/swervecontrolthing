@@ -5,9 +5,7 @@ package com.beckettloose.swervecontrolthing;
  *
  */
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import com.beckettloose.swervecontrolthing.RawInputHandler;
 
 public class NetworkTableSwerveAdapter {
     static NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -22,9 +20,9 @@ public class NetworkTableSwerveAdapter {
     public static void main( String[] args )
     {
         System.out.println( "Swerve Joystick Controller Starting" );
-        inst.startClient("10.0.1.68");
+        inst.startClient("10.0.1.67");
         //inst.startClientTeam(3707);
-        InputHandler.main();
+        //InputHandler.main();
         leftStick.run();
         rightStick.run();
         while (true) {
@@ -33,8 +31,20 @@ public class NetworkTableSwerveAdapter {
             rightButtonStates = rightStick.getButtonStates();
             rightAxisStates = rightStick.getAxisStates();
             for (NormalizedJoystickEvent e : leftButtonStates) {
-                String entry = new StringBuilder(0).append(e.getNumber()).toString();
+                String entry = new StringBuilder("0B").append(e.getNumber()).toString();
                 updateTableValueBoolean(entry, (e.getValue() == 1.0f ? true : false));
+            }
+            for (NormalizedJoystickEvent e : leftAxisStates) {
+                String entry = new StringBuilder("0A").append(e.getNumber()).toString();
+                updateTableValueDouble(entry, e.getValue());
+            }
+            for (NormalizedJoystickEvent e : rightButtonStates) {
+                String entry = new StringBuilder("1B").append(e.getNumber()).toString();
+                updateTableValueBoolean(entry, (e.getValue() == 1.0f ? true : false));
+            }
+            for (NormalizedJoystickEvent e : rightAxisStates) {
+                String entry = new StringBuilder("1A").append(e.getNumber()).toString();
+                updateTableValueDouble(entry, e.getValue());
             }
         }
     }
