@@ -5,7 +5,7 @@ package com.beckettloose.swervecontrolthing;
  * Represents a raw joystick event as it is recieved from the device data stream
  */
 public class RawJoystickEvent {
-    int value;
+    short value;
     int type;
     int number;
 
@@ -19,7 +19,7 @@ public class RawJoystickEvent {
      * @param type an 8 bit integer representing the type of event (0x1 for button, 0x2 for axis)
      * @param number an 8 bit integer representing the ID of the axis or button of the event
      */
-    RawJoystickEvent(int value, int type, int number) {
+    RawJoystickEvent(short value, int type, int number) {
         this.value = value;
         this.type = type;
         this.number = number;
@@ -29,7 +29,7 @@ public class RawJoystickEvent {
      * 
      * @return the value of the event
      */
-    public int getValue() {
+    public short getValue() {
         return value;
     }
 
@@ -53,7 +53,7 @@ public class RawJoystickEvent {
      * Sets the value of the event
      * @param value
      */
-    public void setValue(int value) {
+    public void setValue(short value) {
         this.value = value;
     }
 
