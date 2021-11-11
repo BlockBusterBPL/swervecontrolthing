@@ -11,11 +11,11 @@ public class NetworkTableSwerveAdapter {
     static NetworkTableInstance inst = NetworkTableInstance.getDefault();
     static NetworkTable table = inst.getTable("JoystickControls");
     static RawInputHandler leftStick = new RawInputHandler("/dev/input/js0", 0);
-    static NormalizedJoystickEvent[] leftButtonStates;
-    static NormalizedJoystickEvent[] leftAxisStates;
+    static NormalizedJoystickEvent[] leftButtonStates = new NormalizedJoystickEvent[0xFF];
+    static NormalizedJoystickEvent[] leftAxisStates = new NormalizedJoystickEvent[0xFF];
     static RawInputHandler rightStick = new RawInputHandler("/dev/input/js1", 1);
-    static NormalizedJoystickEvent[] rightButtonStates;
-    static NormalizedJoystickEvent[] rightAxisStates;
+    static NormalizedJoystickEvent[] rightButtonStates = new NormalizedJoystickEvent[0xFF];
+    static NormalizedJoystickEvent[] rightAxisStates = new NormalizedJoystickEvent[0xFF];
 
     public static void main( String[] args )
     {

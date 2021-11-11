@@ -6,7 +6,9 @@ public class NormalizedJoystickEvent {
     int number;
 
     NormalizedJoystickEvent() {
-
+        this.value = 0;
+        this.number = 69;
+        this.type = 1;
     }
 
     NormalizedJoystickEvent(double value, int type, int number) {
