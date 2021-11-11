@@ -9,9 +9,10 @@ public class JoystickEventNormalizer {
     }
 
     public NormalizedJoystickEvent getNormalizedEvent() {
-        out.setType(in.getType());
-        out.setNumber(in.getNumber());
-        out.setValue(((in.getValue()+32768)/(32768+32768))*(1+1)-1.0);
+        out.setType(in.type);
+        out.setNumber(in.number);
+        //out.setValue(((in.value+32768)/(32768+32768))*(1+1)-1.0);
+        out.setValue(in.value);
         return out;
     }
 }
