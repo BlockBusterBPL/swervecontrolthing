@@ -68,6 +68,7 @@ public class RawInputHandler implements Runnable {
     public RawJoystickEvent getNextEvent() throws IOException {
         in.readInt();
         short value = in.readShort();
+        System.out.println(value);
         int type = (in.readUnsignedByte() << 0xF ) >> 0xF ;
         int number = in.readUnsignedByte();
         return new RawJoystickEvent(value, type, number);
