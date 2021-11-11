@@ -48,6 +48,7 @@ public class NetworkTableSwerveAdapter {
         rightStickThread.start();
 
         // Main loop
+        try {
         while (true) {
             long startTime = System.currentTimeMillis();
 
@@ -59,31 +60,34 @@ public class NetworkTableSwerveAdapter {
 
             // Send Left Stick Button States to NetworkTables
             for (NormalizedJoystickEvent e : leftButtonStates) {
-                String entry = new StringBuilder("0B").append(e.getNumber()).toString();
-                updateTableValueBoolean(entry, (e.getValue() == 1.0f ? true : false));
+                String entry = new StringBuilder("0B").append(e.number).toString();
+                updateTableValueBoolean(entry, (e.value == 1.0f ? true : false));
             }
 
             // Send Left Stick Axis States to NetworkTables
             for (NormalizedJoystickEvent e : leftAxisStates) {
-                String entry = new StringBuilder("0A").append(e.getNumber()).toString();
-                updateTableValueDouble(entry, e.getValue());
+                String entry = new StringBuilder("0A").append(e.number).toString();
+                updateTableValueDouble(entry, e.value);
             }
 
             // Send Right Stick Button States to NetworkTables
             for (NormalizedJoystickEvent e : rightButtonStates) {
-                String entry = new StringBuilder("1B").append(e.getNumber()).toString();
-                updateTableValueBoolean(entry, (e.getValue() == 1.0f ? true : false));
+                String entry = new StringBuilder("1B").append(e.number).toString();
+                updateTableValueBoolean(entry, (e.value == 1.0f ? true : false));
             }
 
             // Send Right Stick Axis States to NetworkTables
             for (NormalizedJoystickEvent e : rightAxisStates) {
-                String entry = new StringBuilder("1A").append(e.getNumber()).toString();
-                updateTableValueDouble(entry, e.getValue());
+                String entry = new StringBuilder("1A").append(e.number).toString();
+                updateTableValueDouble(entry, e.value);
             }
 
             long endTime = System.currentTimeMillis();
 
             System.out.println(new StringBuilder("Main loop length: ").append(endTime - startTime).append("ms"));
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
