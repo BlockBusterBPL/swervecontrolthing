@@ -30,6 +30,8 @@ public class RawInputHandler implements Runnable {
             DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(path)));
             this.in = in;
             System.out.println("Initialized RawInputHandler for joystick " + stickID);
+            this.buttonStates = getEmptyArray(0x1);
+            this.axisStates = getEmptyArray(0x2);
         } catch (FileNotFoundException e) {
             System.out.println("Device File Not Found!");
             e.printStackTrace();
