@@ -33,7 +33,7 @@ public class NetworkTableSwerveAdapter {
     public static void main( String[] args )
     {
         System.out.println( "Swerve Joystick Controller Starting" );
-        inst.startClient("10.0.1.67"); // Start NetworkTables Client for testing purpouses
+        inst.startClient("10.0.1.68"); // Start NetworkTables Client for testing purpouses
         //inst.startClientTeam(3707); // Start NetworkTables Client for roboRIO
         //InputHandler.main();
 
@@ -49,6 +49,7 @@ public class NetworkTableSwerveAdapter {
 
         // Main loop
         while (true) {
+            long startTime = System.currentTimeMillis();
 
             // Get button states from each Handler
             leftButtonStates = leftStick.getButtonStates();
@@ -79,6 +80,10 @@ public class NetworkTableSwerveAdapter {
                 String entry = new StringBuilder("1A").append(e.getNumber()).toString();
                 updateTableValueDouble(entry, e.getValue());
             }
+
+            long endTime = System.currentTimeMillis();
+
+            System.out.println(new StringBuilder("Main loop length: ").append(endTime - startTime).append("ms"));
         }
     }
 
