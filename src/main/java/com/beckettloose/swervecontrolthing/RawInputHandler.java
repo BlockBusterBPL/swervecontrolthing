@@ -44,7 +44,6 @@ public class RawInputHandler implements Runnable {
         axisStates = getEmptyArray(0x2);
         while (!Thread.interrupted()) {
             try {
-                if (in.available() >= 8) {
                 NormalizedJoystickEvent event = new JoystickEventNormalizer(getNextEvent()).getNormalizedEvent();
                 Boolean isEventAxis = event.isAxis();
                 int eventId = event.getNumber();
@@ -53,14 +52,7 @@ public class RawInputHandler implements Runnable {
                 } else {
                     buttonStates[eventId] = event;
                 }
-            } else {
-                System.out.println("Not enough data avaliable to read from " + this.path + " Needed 8 bytes but only got " + in.available());
-                Thread.sleep(50);
-            }
             } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
