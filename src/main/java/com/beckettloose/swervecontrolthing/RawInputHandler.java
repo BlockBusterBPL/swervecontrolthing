@@ -19,7 +19,7 @@ public class RawInputHandler implements Runnable {
         this.path = path;
         this.stickID = stickID;
         try {
-            DataInputStream in = new DataInputStream(new FileInputStream(path));
+            DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(path)));
             this.in = in;
         } catch (FileNotFoundException e) {
             System.out.println("Device File Not Found!");
