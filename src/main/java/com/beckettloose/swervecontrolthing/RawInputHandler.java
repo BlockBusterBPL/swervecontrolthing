@@ -80,7 +80,7 @@ public class RawInputHandler implements Runnable {
         bb.order(ByteOrder.LITTLE_ENDIAN);
         bb.put(b[0]);
         bb.put(b[1]);
-        return bb.getShort();
+        return bb.getShort(0);
     }
 
     public NormalizedJoystickEvent[] getButtonStates() {
