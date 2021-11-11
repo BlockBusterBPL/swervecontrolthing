@@ -21,6 +21,7 @@ public class RawInputHandler implements Runnable {
         try {
             DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(path)));
             this.in = in;
+            System.out.println("Initialized RawInputHandler for joystick " + stickID);
         } catch (FileNotFoundException e) {
             System.out.println("Device File Not Found!");
             e.printStackTrace();
@@ -31,7 +32,7 @@ public class RawInputHandler implements Runnable {
         while (!Thread.interrupted()) {
             try {
                 NormalizedJoystickEvent event = new JoystickEventNormalizer(getNextEvent()).getNormalizedEvent();
-                Boolean isEventAxis = new JoystickEventInfo(event).isAxis();
+                Boolean isEventAxis = event.isAxis();
                 int eventId = event.getNumber();
                 if (isEventAxis) {
                     axisStates[eventId] = event;

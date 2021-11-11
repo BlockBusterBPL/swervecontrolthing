@@ -38,4 +38,8 @@ public class NormalizedJoystickEvent {
     public void setNumber(int number) {
         this.number = number;
     }
+
+    public Boolean isAxis() {
+        return (this.type == 2 ? true : false);
+    }
 }

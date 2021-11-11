@@ -38,4 +38,8 @@ public class RawJoystickEvent {
     public void setNumber(int number) {
         this.number = number;
     }
+
+    public Boolean isAxis() {
+        return (this.type == 0x2 ? true : false);
+    }
 }
