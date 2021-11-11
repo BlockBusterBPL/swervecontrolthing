@@ -3,6 +3,9 @@ package com.beckettloose.swervecontrolthing;
 import edu.wpi.first.networktables.*;
 import java.io.*;
 
+/**
+ * Represents an instance of a raw input handler thread
+ */
 public class RawInputHandler implements Runnable {
 
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -15,6 +18,11 @@ public class RawInputHandler implements Runnable {
     NormalizedJoystickEvent[] buttonStates = new NormalizedJoystickEvent[0xFF];
     NormalizedJoystickEvent[] axisStates = new NormalizedJoystickEvent[0xFF];
 
+    /**
+     * Create an instance of the raw input handler
+     * @param path the file path to the joystick's device file (usually in /dev/input/)
+     * @param stickID the ID of the event handler. This should usually be the same ID as the device file (e.g. /dev/input/js0 would be 0)
+     */
     RawInputHandler(String path, int stickID) {
         this.path = path;
         this.stickID = stickID;
@@ -28,7 +36,13 @@ public class RawInputHandler implements Runnable {
         }
     }
 
+    /**
+     * The main method for the Raw Input Handler thread
+     */
     public void run() {
+        buttonStates = getEmptyArray(0x1);
+        axisStates = getEmptyArray(0x2);
+        
         while (!Thread.interrupted()) {
             try {
                 NormalizedJoystickEvent event = new JoystickEventNormalizer(getNextEvent()).getNormalizedEvent();
@@ -45,10 +59,15 @@ public class RawInputHandler implements Runnable {
         }
     }
 
+    /**
+     * Reads the next event from the instance's Input Buffer
+     * @return the Raw Joystick Event recieved
+     * @throws IOException if the method fails to read from the Input Buffer
+     */
     public RawJoystickEvent getNextEvent() throws IOException {
         in.readInt();
         int value = in.readShort();
-        int type = (in.readUnsignedByte() << 1 ) >> 1 ;
+        int type = (in.readUnsignedByte() << 0xF ) >> 0xF ;
         int number = in.readUnsignedByte();
         return new RawJoystickEvent(value, type, number);
     }
@@ -59,5 +78,13 @@ public class RawInputHandler implements Runnable {
 
     public NormalizedJoystickEvent[] getAxisStates() {
         return this.axisStates;
+    }
+
+    public static NormalizedJoystickEvent[] getEmptyArray(int type) {
+        NormalizedJoystickEvent[] out = new NormalizedJoystickEvent[0xFF];
+        for (int i = 0; i <= 0xFE; i++) {
+            out[i] = new NormalizedJoystickEvent(0, type, i);
+        }
+        return out;
     }
 }

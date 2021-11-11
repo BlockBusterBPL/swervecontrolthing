@@ -6,6 +6,7 @@ import net.java.games.input.ControllerEnvironment;
 import net.java.games.input.Event;
 import net.java.games.input.EventQueue;
 
+@Deprecated(forRemoval = true)
 public class InputHandler {
 	public InputHandler() {
 		while (true) {
