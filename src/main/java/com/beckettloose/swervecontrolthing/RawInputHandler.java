@@ -2,6 +2,8 @@ package com.beckettloose.swervecontrolthing;
 
 import edu.wpi.first.networktables.*;
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  * Represents an instance of a raw input handler thread
@@ -67,11 +69,18 @@ public class RawInputHandler implements Runnable {
      */
     public RawJoystickEvent getNextEvent() throws IOException {
         in.readInt();
-        short value = in.readShort();
-        System.out.println(value);
+        short value = swapEndian(in.readNBytes(2));
         int type = (in.readUnsignedByte() << 0xF ) >> 0xF ;
         int number = in.readUnsignedByte();
         return new RawJoystickEvent(value, type, number);
+    }
+
+    private short swapEndian(byte[] b) {
+        ByteBuffer bb = ByteBuffer.allocate(2);
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+        bb.put(b[0]);
+        bb.put(b[1]);
+        return bb.getShort();
     }
 
     public NormalizedJoystickEvent[] getButtonStates() {

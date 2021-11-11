@@ -50,7 +50,7 @@ public class NetworkTableSwerveAdapter {
         // Main loop
         try {
         while (true) {
-            //long startTime = System.currentTimeMillis();
+            long startTime = System.currentTimeMillis();
 
             // Get button states from each Handler
             leftButtonStates = leftStick.getButtonStates();
@@ -82,9 +82,9 @@ public class NetworkTableSwerveAdapter {
                 updateTableValueDouble(entry, e.value);
             }
 
-            //long endTime = System.currentTimeMillis();
+            long endTime = System.currentTimeMillis();
 
-            //System.out.println(new StringBuilder("Main loop length: ").append(endTime - startTime).append("ms"));
+            System.out.println(new StringBuilder("Main loop length: ").append(endTime - startTime).append("ms"));
         }
         } catch (Exception e) {
             e.printStackTrace();
