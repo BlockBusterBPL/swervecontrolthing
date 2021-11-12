@@ -74,7 +74,11 @@ public class RawInputHandler implements Runnable {
         int number = in.readUnsignedByte();
         return new RawJoystickEvent(value, type, number);
     }
-
+    /**
+    * Something about small indians
+    * @param b the array of 2 bytes to swap endianness
+    * @return a short integer with opposite endianness
+    */
     private short swapEndian(byte[] b) {
         ByteBuffer bb = ByteBuffer.allocate(2);
         bb.order(ByteOrder.LITTLE_ENDIAN);
