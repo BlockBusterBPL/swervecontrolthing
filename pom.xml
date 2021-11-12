@@ -66,19 +66,6 @@
     </dependency>
 
     <dependency>
-      <groupId>net.java.jinput</groupId>
-      <artifactId>jinput</artifactId>
-      <version>2.0.9</version>
-    </dependency>
-
-    <dependency>
-      <groupId>net.java.jinput</groupId>
-      <artifactId>jinput</artifactId>
-      <version>2.0.9</version>
-      <classifier>natives-all</classifier>
-    </dependency>
-
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>

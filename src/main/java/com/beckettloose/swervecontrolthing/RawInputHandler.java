@@ -17,8 +17,8 @@ public class RawInputHandler implements Runnable {
     int stickID;
     DataInputStream in;
 
-    NormalizedJoystickEvent[] buttonStates = new NormalizedJoystickEvent[0xFF];
-    NormalizedJoystickEvent[] axisStates = new NormalizedJoystickEvent[0xFF];
+    NormalizedJoystickEvent[] buttonStates = new NormalizedJoystickEvent[0xF];
+    NormalizedJoystickEvent[] axisStates = new NormalizedJoystickEvent[0xF];
 
     /**
      * Create an instance of the raw input handler
@@ -92,8 +92,8 @@ public class RawInputHandler implements Runnable {
     }
 
     public static NormalizedJoystickEvent[] getEmptyArray(int type) {
-        NormalizedJoystickEvent[] out = new NormalizedJoystickEvent[0xFF];
-        for (int i = 0; i < 0xFF; i++) {
+        NormalizedJoystickEvent[] out = new NormalizedJoystickEvent[0xF];
+        for (int i = 0; i < 0xF; i++) {
             out[i] = new NormalizedJoystickEvent(0, type, i);
         }
         return out;

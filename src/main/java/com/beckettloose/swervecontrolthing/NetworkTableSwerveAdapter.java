@@ -14,13 +14,13 @@ public class NetworkTableSwerveAdapter {
 
     // Set up Input Handler and value storage for Left Joystick
     static RawInputHandler leftStick = new RawInputHandler("/dev/input/js0", 0);
-    static NormalizedJoystickEvent[] leftButtonStates = new NormalizedJoystickEvent[0xFF];
-    static NormalizedJoystickEvent[] leftAxisStates = new NormalizedJoystickEvent[0xFF];
+    static NormalizedJoystickEvent[] leftButtonStates = new NormalizedJoystickEvent[0xF];
+    static NormalizedJoystickEvent[] leftAxisStates = new NormalizedJoystickEvent[0xF];
 
     // Set up Input Handler and value storage for Right Joystick
     static RawInputHandler rightStick = new RawInputHandler("/dev/input/js1", 1);
-    static NormalizedJoystickEvent[] rightButtonStates = new NormalizedJoystickEvent[0xFF];
-    static NormalizedJoystickEvent[] rightAxisStates = new NormalizedJoystickEvent[0xFF];
+    static NormalizedJoystickEvent[] rightButtonStates = new NormalizedJoystickEvent[0xF];
+    static NormalizedJoystickEvent[] rightAxisStates = new NormalizedJoystickEvent[0xF];
 
     // Create threads for each handler
     static Thread leftStickThread = new Thread(leftStick);
