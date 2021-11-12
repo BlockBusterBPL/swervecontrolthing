@@ -62,7 +62,6 @@ public class NetworkTableSwerveAdapter {
             for (NormalizedJoystickEvent e : leftButtonStates) {
                 String entry = new StringBuilder("0B").append(e.number).toString();
                 updateTableValueBoolean(entry, (e.value == 3.051850947599719E-5 ? true : false));
-                System.out.println(e.value);
             }
 
             // Send Left Stick Axis States to NetworkTables
