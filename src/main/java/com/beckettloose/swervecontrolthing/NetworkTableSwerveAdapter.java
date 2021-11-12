@@ -61,7 +61,7 @@ public class NetworkTableSwerveAdapter {
             // Send Left Stick Button States to NetworkTables
             for (NormalizedJoystickEvent e : leftButtonStates) {
                 String entry = new StringBuilder("0B").append(e.number).toString();
-                updateTableValueBoolean(entry, (e.value == 1.0f ? true : false));
+                updateTableValueBoolean(entry, (e.value == 1 ? true : false));
             }
 
             // Send Left Stick Axis States to NetworkTables
@@ -73,7 +73,7 @@ public class NetworkTableSwerveAdapter {
             // Send Right Stick Button States to NetworkTables
             for (NormalizedJoystickEvent e : rightButtonStates) {
                 String entry = new StringBuilder("1B").append(e.number).toString();
-                updateTableValueBoolean(entry, (e.value == 1.0f ? true : false));
+                updateTableValueBoolean(entry, (e.value == 1 ? true : false));
             }
 
             // Send Right Stick Axis States to NetworkTables
