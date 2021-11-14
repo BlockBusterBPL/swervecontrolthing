@@ -182,8 +182,6 @@ public class NetworkTableSwerveAdapter {
     }
 
     public static boolean handshakeRecived() {
-        Boolean returned = false;
-        
-        return returned;
+        return returnedEntry.getBoolean(false);
     }
 }
