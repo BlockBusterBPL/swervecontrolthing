@@ -63,6 +63,7 @@ public class NetworkTableSwerveAdapter {
         while (!handshakeRecived()) {
             try {
                 System.out.println("Handshake Completed but not verified!");
+                Thread.sleep(5000);
             } catch (Exception e) {
                 e.printStackTrace();
             }
