@@ -15,10 +15,10 @@ public class NetworkTableSwerveAdapter {
 
     // Meta Table
     static NetworkTable meta = inst.getTable("JoystickMeta");
-    static NetworkTableEntry bootEntry = inst.getEntry("boot");
+    static NetworkTableEntry bootEntry = meta.getEntry("boot");
     static double bootTime = 0;
-    static NetworkTableEntry returnedEntry = inst.getEntry("returned");
-    static NetworkTableEntry ping = inst.getEntry("ping");
+    static NetworkTableEntry returnedEntry = meta.getEntry("returned");
+    static NetworkTableEntry ping = meta.getEntry("ping");
 
     // Set up Input Handler and value storage for Left Joystick
     static RawInputHandler leftStick = new RawInputHandler("/dev/input/js0", 0);
