@@ -19,6 +19,7 @@ public class NetworkTableSwerveAdapter {
     static double bootTime = 0;
     static NetworkTableEntry returnedEntry = meta.getEntry("return");
     static NetworkTableEntry ping = meta.getEntry("ping");
+    static Boolean pingUpdated = false;
 
     // Set up Input Handler and value storage for Left Joystick
     static RawInputHandler leftStick = new RawInputHandler("/dev/input/js0", 0);
@@ -83,7 +84,14 @@ public class NetworkTableSwerveAdapter {
         try {
         while (true) {
             long startTime = System.currentTimeMillis();
-            ping.setString("pong");
+            if(!pingUpdated) {
+                ping.setString("pong");
+                pingUpdated = true;
+            } else {
+                ping.setString("ping");
+                pingUpdated = false;
+            }
+            
 
             if (bootEntry.getDouble(0) != bootTime){
                 System.out.println("Lost synchronization with rio!");
