@@ -16,6 +16,9 @@ public class NetworkTableSwerveAdapter {
     // Meta Table
     static NetworkTable meta = inst.getTable("JoystickMeta");
     static NetworkTableEntry bootEntry = inst.getEntry("boot");
+    static double bootTime = 0;
+    static NetworkTableEntry returnedEntry = inst.getEntry("returned");
+    static NetworkTableEntry ping = inst.getEntry("ping");
 
     // Set up Input Handler and value storage for Left Joystick
     static RawInputHandler leftStick = new RawInputHandler("/dev/input/js0", 0);
@@ -42,6 +45,30 @@ public class NetworkTableSwerveAdapter {
         //inst.startClientTeam(3707); // Start NetworkTables Client for roboRIO
         //InputHandler.main();
 
+        while (!rioHandshake()) {
+            try {
+                System.out.println("Unable to complete handshake!");
+                Thread.sleep(5000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        while (!handshakeRecived()) {
+            try {
+                System.out.println("Handshake Completed but not verified!");
+                System.exit(0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         // Init arrays for value storage
         leftButtonStates = RawInputHandler.getEmptyArray(0x1);
         leftAxisStates = RawInputHandler.getEmptyArray(0x2);
@@ -56,6 +83,25 @@ public class NetworkTableSwerveAdapter {
         try {
         while (true) {
             long startTime = System.currentTimeMillis();
+            ping.setString("pong");
+
+            if (bootEntry.getDouble(0) != bootTime){
+                System.out.println("Lost synchronization with rio!");
+                while (!rioHandshake()) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                while (!handshakeRecived()) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
             // Get button states from each Handler
             leftButtonStates = leftStick.getButtonStates();
@@ -72,7 +118,12 @@ public class NetworkTableSwerveAdapter {
             // Send Left Stick Axis States to NetworkTables
             for (NormalizedJoystickEvent e : leftAxisStates) {
                 String entry = new StringBuilder("0A").append(e.number).toString();
+                if (!(e.value > 1 || e.value < -1)) {
                 updateTableValueDouble(entry, e.value);
+                } else {
+                    updateTableValueDouble(entry, 0);
+                    System.out.println("Output Value Out of Bounds!");
+                }
             }
 
             // Send Right Stick Button States to NetworkTables
@@ -84,7 +135,12 @@ public class NetworkTableSwerveAdapter {
             // Send Right Stick Axis States to NetworkTables
             for (NormalizedJoystickEvent e : rightAxisStates) {
                 String entry = new StringBuilder("1A").append(e.number).toString();
+                if (!(e.value > 1 || e.value < -1)) {
                 updateTableValueDouble(entry, e.value);
+                } else {
+                    updateTableValueDouble(entry, 0);
+                    System.out.println("Output Value Out of Bounds!");
+                }
             }
 
             long endTime = System.currentTimeMillis();
@@ -104,35 +160,31 @@ public class NetworkTableSwerveAdapter {
         table.getEntry(entry).forceSetBoolean(value);
     }
 
-    public Boolean tableConnect() {
+    public static Boolean tableConnect() {
         return inst.isConnected();
     }
 
-    public void boot() {
-        bootEntry.setDouble(0);
-    }
-
-    public Boolean rioHandshake(){
-        Boolean handshakeComplete = false;
+    public static Boolean rioHandshake(){
         bootEntry.setDouble(0);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         if (bootEntry.getDouble(0) != 0){
             double state = bootEntry.getDouble(1);
             state = state++;
             bootEntry.setDouble(state);
+            bootTime = state;
         } else {
             return false;
         }
-        return handshakeComplete;
+        return true;
     }
 
-    public boolean handshakeRecived() {
+    public static boolean handshakeRecived() {
         Boolean returned = false;
+        
         return returned;
     }
 }
