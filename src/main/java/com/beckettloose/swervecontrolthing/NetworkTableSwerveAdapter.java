@@ -184,7 +184,7 @@ public class NetworkTableSwerveAdapter {
     }
 
     public static boolean handshakeRecieved() {
-        if (bootTime-- == bootEntry.getDouble(0)) {
+        if (bootTime == bootEntry.getDouble(0)) {
             return true;
         } else {
             return false;
