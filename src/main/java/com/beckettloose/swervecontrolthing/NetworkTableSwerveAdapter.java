@@ -85,7 +85,7 @@ public class NetworkTableSwerveAdapter {
             long startTime = System.currentTimeMillis();
             ping.setString("pong");
 
-            if (bootEntry.getDouble(0) != bootTime--){
+            if (bootEntry.getDouble(0) != bootTime){
                 System.out.println("Lost synchronization with rio!");
                 while (!rioHandshake()) {
                     try {
