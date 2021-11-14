@@ -176,10 +176,11 @@ public class NetworkTableSwerveAdapter {
             state = state++;
             bootEntry.setDouble(state);
             bootTime = state;
+            System.out.println(bootTime);
+            return true;
         } else {
             return false;
         }
-        return true;
     }
 
     public static boolean handshakeRecived() {
