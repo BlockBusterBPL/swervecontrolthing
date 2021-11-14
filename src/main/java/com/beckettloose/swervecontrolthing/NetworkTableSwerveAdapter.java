@@ -60,7 +60,7 @@ public class NetworkTableSwerveAdapter {
             e.printStackTrace();
         }
 
-        while (!handshakeRecived()) {
+        while (!handshakeRecieved()) {
             try {
                 System.out.println("Handshake Completed but not verified!");
                 Thread.sleep(5000);
@@ -94,7 +94,7 @@ public class NetworkTableSwerveAdapter {
                         e.printStackTrace();
                     }
                 }
-                while (!handshakeRecived()) {
+                while (!handshakeRecieved()) {
                     try {
                         Thread.sleep(1000);
                     } catch (Exception e) {
@@ -183,7 +183,11 @@ public class NetworkTableSwerveAdapter {
         }
     }
 
-    public static boolean handshakeRecived() {
-        return returnedEntry.getBoolean(false);
+    public static boolean handshakeRecieved() {
+        if (bootTime-- == bootEntry.getDouble(0)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
