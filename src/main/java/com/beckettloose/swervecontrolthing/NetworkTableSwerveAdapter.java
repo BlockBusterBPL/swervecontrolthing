@@ -1,6 +1,7 @@
 package com.beckettloose.swervecontrolthing;
 
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 /**
@@ -8,9 +9,13 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  * @author Beckett Loose
  */
 public class NetworkTableSwerveAdapter {
-    //Get instance of NetworkTables
+    // Get instance of NetworkTables
     static NetworkTableInstance inst = NetworkTableInstance.getDefault();
     static NetworkTable table = inst.getTable("JoystickControls");
+
+    // Meta Table
+    static NetworkTable meta = inst.getTable("JoystickMeta");
+    static NetworkTableEntry bootEntry = inst.getEntry("boot");
 
     // Set up Input Handler and value storage for Left Joystick
     static RawInputHandler leftStick = new RawInputHandler("/dev/input/js0", 0);
@@ -97,5 +102,37 @@ public class NetworkTableSwerveAdapter {
 
     public static void updateTableValueBoolean(String entry, Boolean value) {
         table.getEntry(entry).forceSetBoolean(value);
+    }
+
+    public Boolean tableConnect() {
+        return inst.isConnected();
+    }
+
+    public void boot() {
+        bootEntry.setDouble(0);
+    }
+
+    public Boolean rioHandshake(){
+        Boolean handshakeComplete = false;
+        bootEntry.setDouble(0);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        if (bootEntry.getDouble(0) != 0){
+            double state = bootEntry.getDouble(1);
+            state = state++;
+            bootEntry.setDouble(state);
+        } else {
+            return false;
+        }
+        return handshakeComplete;
+    }
+
+    public boolean handshakeRecived() {
+        Boolean returned = false;
+        return returned;
     }
 }
